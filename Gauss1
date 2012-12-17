@@ -1,0 +1,122 @@
+package forRandomOrder;
+
+import java.awt.*;// we need this one for Components
+import java.awt.event.*;//we need this one for ActionListener
+import javax.swing.*;//we need this one for Components whose class name begins with a J
+
+
+public class part1 extends JFrame  {
+
+  //References Declared Here 
+	private JTextArea instructionsTA;//instructions for the user first pane
+	private JLabel rowsL;//instructs user where to put row
+	private JLabel colsL;//instructs user where to put col
+	private JTextField rowsTF;//where you put the value of the row
+	private JTextField colsTF;//where you put the value of the col
+	private JButton goB;
+	public int rows; //holds the row value
+	public int cols;// holds the column value
+	private JTextArea messageTA;//Displays error messages to user
+
+	private Container myCP;
+
+	public part1(){
+		super("Gaussian Elimination With Partial Pivoting");
+		setSize(300, 300); 
+		setLocation(100,100);
+		myCP = getContentPane(); 
+		myCP.setLayout(null);
+
+		//GUI Components Constructed Here 
+		instructionsTA = new JTextArea("   Enter how many rows and columns and \n   I will row reduce it for you!");
+		instructionsTA.setSize(250,40);
+		instructionsTA.setLocation(20,10);
+		instructionsTA.setBackground(Color.PINK);
+		instructionsTA.setEditable(false);
+		myCP.add(instructionsTA);
+		
+		messageTA = new JTextArea();
+		messageTA.setSize(250,40);
+		messageTA.setLocation(20,200);
+		messageTA.setBackground(Color.PINK);
+		messageTA.setEditable(false);
+		myCP.add(messageTA);
+
+		rowsL = new JLabel("Rows: ");
+		rowsL.setSize(100,20);
+		rowsL.setLocation(50,100);
+		myCP.add(rowsL);
+
+		colsL = new JLabel("Cols: ");
+		colsL.setSize(150,20);
+		colsL.setLocation(50,150);
+		myCP.add(colsL);
+
+		rowsTF = new JTextField("");
+		rowsTF.setSize(40,20);
+		rowsTF.setLocation(100,100);
+		rowsTF.setBackground(Color.WHITE);
+		rowsTF.setEditable(true);
+		myCP.add(rowsTF);
+
+
+		colsTF = new JTextField("");
+		colsTF.setSize(40,20);
+		colsTF.setLocation(100,150);
+		colsTF.setBackground(Color.WHITE);
+		colsTF.setEditable(true);
+		myCP.add(colsTF);
+		
+
+		goB = new JButton(" Go! ");
+		goB.setSize(100,20);
+		goB.setLocation(175,125);
+		goB.setEnabled(true);
+		myCP.add(goB);
+		goB.addActionListener(new GoBHandler());
+
+
+		setVisible(true);
+	}//constructor
+
+
+	
+
+	
+			
+
+//************************GoBHandler***************************************************//
+	public class GoBHandler implements ActionListener {
+		public void actionPerformed (ActionEvent e){
+			String userInput = rowsTF.getText();
+			int rows = Integer.parseInt(userInput);
+			int cols;
+			if(rows<2 || rows >8){
+				messageTA.append("number of rows must be between\n 2 and 8");
+			}else {
+				userInput = colsTF.getText();
+				cols = Integer.parseInt(userInput);
+				if( cols < 2 || cols > 8){
+					messageTA.append("number of columns must be between\n 2 and 8");
+				} else {
+					//generate second window
+					part2 mySecondWindow = new part2(rows, cols);
+				}//inner else
+			}//else
+		} //actionPerformed 
+		
+	}//***********************GoBHandler*********************************************// 
+
+
+
+
+
+	public static void main(String[] args) {
+
+		part1 myAppF = new part1(); 
+
+
+
+	}//main
+
+}//Class Part1
